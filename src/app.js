@@ -22,6 +22,8 @@ app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use("/api/v1", routes);
+
 app.use(mongoSanitize());
 
 app.use(cookieParser());
@@ -36,7 +38,6 @@ app.use(
 
 app.use(cors());
 
-app.use("/api/v1", routes);
 
 app.use(async (error, res, next) => {
   next(createHttpError.NotFound("This route does not exist"));
