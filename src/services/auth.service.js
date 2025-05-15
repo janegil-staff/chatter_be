@@ -2,12 +2,13 @@ import createHttpError from "http-errors";
 import validator from "validator";
 import bcrypt from "bcrypt";
 import { UserModel } from "../models/index.js";
+import cloudinary from "../configs/cloudinary.config.js";
 
 //env variables
 const { DEFAULT_PICTURE, DEFAULT_STATUS } = process.env;
 
 export const createUser = async (userData) => {
-  const { name, email, picture, status, password } = userData;
+  const { name, email, image, status, password } = userData;
 
   //check if fields are empty
   if (!name || !email || !password) {
@@ -59,7 +60,24 @@ export const createUser = async (userData) => {
       "Please make sure your password is between 6 and 128 characters."
     );
   }
+  let picture;
+  if (image) {
+    // base64 format
+    if (image.startsWith("data:image")) {
+      try {
+        const uploadResponse = await cloudinary.uploader.upload(image);
+        picture = uploadResponse.secure_url;
+        console.log(picture);
+      } catch (error) {
+        console.error("Error uploading image:", error);
 
+        return res.status(400).json({
+          success: false,
+          message: "Error uploading image",
+        });
+      }
+    }
+  }
   //hash password--->to be done in the user model
 
   //adding user to databse

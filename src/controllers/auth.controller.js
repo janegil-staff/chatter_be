@@ -4,11 +4,11 @@ import { generateToken, verifyToken } from "../services/token.service.js";
 
 export const register = async (req, res, next) => {
   try {
-    const { name, email, picture, status, password } = req.body;
+    const { name, email, image, status, password } = req.body;
     const newUser = await createUser({
       name,
       email,
-      picture,
+      image,
       status,
       password,
     });
