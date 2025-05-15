@@ -7,6 +7,7 @@ import {
 } from "../services/message.service.js";
 
 export const sendMessage = async (req, res, next) => {
+  console.log("SENDING MEESAGE");
   try {
     const user_id = req.user.userId;
     const { message, convo_id, files } = req.body;
@@ -25,6 +26,8 @@ export const sendMessage = async (req, res, next) => {
     await updateLatestMessage(convo_id, newMessage);
     res.json(populatedMessage);
   } catch (error) {
+    res.json({message: error});
+    console.log(error);
     next(error);
   }
 };
