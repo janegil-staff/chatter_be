@@ -6,7 +6,10 @@ export const doesConversationExist = async (
   receiver_id,
   isGroup
 ) => {
+
+  console.log(isGroup);
   if (isGroup === false) {
+  
     let convos = await ConversationModel.find({
       isGroup: false,
       $and: [
@@ -16,7 +19,7 @@ export const doesConversationExist = async (
     })
       .populate("users", "-password")
       .populate("latestMessage");
-
+    
     if (!convos)
       throw createHttpError.BadRequest("Oops...Something went wrong !");
 
@@ -28,6 +31,7 @@ export const doesConversationExist = async (
 
     return convos[0];
   } else {
+    console.log(isGroup);
     //it's a group chat
     let convo = await ConversationModel.findById(isGroup)
       .populate("users admin", "-password")
