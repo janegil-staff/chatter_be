@@ -3,6 +3,7 @@ import logger from "../configs/logger.config.js";
 import { findUser } from "../services/user.service.js";
 import {
   createConversation,
+  getUserConversations,
   populateConversation,
 } from "../services/conversation.service.js";
 

@@ -10,7 +10,7 @@ const router = express.Router();
 
 router
   .route("/")
-  .post(trimRequest.all, authMiddleware, create_open_conversation)
-  .get(trimRequest.all, authMiddleware, getConversations);
-  
+  .post(trimRequest.all, authMiddleware, create_open_conversation);
+router.route("/").get(trimRequest.all, authMiddleware, getConversations);
+
 export default router;
