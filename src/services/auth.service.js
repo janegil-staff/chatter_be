@@ -65,7 +65,9 @@ export const createUser = async (userData) => {
     // base64 format
     if (image.startsWith("data:image")) {
       try {
-        const uploadResponse = await cloudinary.uploader.upload(image);
+        const uploadResponse = await cloudinary.uploader.upload(image, {
+          folder: "chatter"
+        });
         picture = uploadResponse.secure_url;
         console.log(picture);
       } catch (error) {
